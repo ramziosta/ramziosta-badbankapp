@@ -1,23 +1,19 @@
 {
   "name": "badbank",
   "version": "1.0.0",
-  "description": "Full Stack badbank App Backend",
+  "description": "MongoDB tutorial",
   "main": "server.js",
   "scripts": {
-    "build": "cd client && npm run build",
-        "install-client": "cd client && npm install",
-        "heroku-postbuild": "npm run install-client && npm run build",
-        "server": "nodemon server.js",
-        "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
-        "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
+    "start": "node server",
+    "dev": "nodemon server"
   },
+  "author": "Dave Gray",
   "license": "ISC",
   "engines": {
     "node": "14.x"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "concurrently": "^7.2.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "date-fns": "^2.23.0",
