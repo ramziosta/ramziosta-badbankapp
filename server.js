@@ -2,8 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
+//const corsOptions = require('./config/corsOptions')
 const cors = require("cors");
-// const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
@@ -22,14 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", express.static(path.join(__dirname, "/public")));
 
-// Step 1:
-app.use(express.static(path.resolve(__dirname, "./client/build")));
-// Step 2:
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-});
 // routes
 app.use("/", require("./routes/root"));
 app.use("/register", require("./routes/register"));
@@ -37,13 +30,32 @@ app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
 
-//app.use(verifyJWT);
+app.use(verifyJWT);
 app.use("/transactions", require("./routes/api/transaction"));
-app.use("/update", require("./routes/api/users"));
+app.use("/employees", require("./routes/api/employees"));
 app.use("/users/transactions", require("./routes/acctransactions"));
 app.use("/users", require("./routes/api/users"));
 app.use("/users/email", require("./routes/api/users"));
+app.post("/transaction", async (req, res) => {
+  console.log(req.body);
+  try {
+   
+    await Transaction.create({
+      amount: req.body.amount,
+      balance: req.body.balance,
+      transactionType: req.body.transactionType,
+      transactionDate: req.body.transactionDate,
+    });
+    res.json({ status: "ok" });
+  } catch (err) {
+    res.json({ status: "error", error: "error needs to be set according to validation" });
+  }
+});
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join('build')));
+  app.get("*", (req,res) => {(path.join(__dirname, 'client', 'build', 'index.html'))});
+}
 
 app.all("*", (req, res) => {
   res.status(404);
@@ -57,11 +69,6 @@ app.all("*", (req, res) => {
 });
 
 app.use(errorHandler);
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join('build')));
-  app.get("*", (req,res) => {(path.join(__dirname, 'client', 'build', 'index.html'))});
-}
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");

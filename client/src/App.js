@@ -20,8 +20,8 @@ import ROLES from "./config/roles_list";
 import "./styles/Home.css";
 
 function App() {
-
   const [userData, setUserData] = useState({});
+
   useEffect(() => {
     const sessionData = sessionStorage.getItem('sessionContext');
     if ( sessionData !== null ) setUserData(JSON.parse(sessionData));

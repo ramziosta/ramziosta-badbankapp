@@ -73,6 +73,7 @@ function DashBoard() {
     return (
       <tr key={index}>
         <td className="fs-6 text-wrap">{transaction.amount}</td>
+        <td className="fs-6 text-wrap">{transaction.accountType}</td>
         <td className="fs-6 text-wrap">{transaction.transactionType}</td>
         <td className="fs-6 text-wrap">{transaction.transactionDate}</td>
       </tr>
@@ -95,14 +96,14 @@ function DashBoard() {
             justifyContent:"flex-end"
           }}
         >
-        Welcome {' '} <b style={{color:"#ed2424", margin:" 0 .5rem"}}>{userData.user} </b>
+        Welcome {' '} <b style={{color:"#ed2424", margin:" 0 5rem 0 .8rem"}}>{userData.user} </b>
         </h4>
         <h4
           className="header"
           style={{
             fontSize: "1.3rem",
             color: "white",
-            padding: ".4rem",
+            padding:"0.4rem 2rem",
             border: "solid black 1px",
             backgroundColor: "grey",
             width: "100%",
@@ -115,7 +116,7 @@ function DashBoard() {
           style={{
             fontSize: "1.3rem",
             color: "white",
-            padding: ".4rem",
+            padding: "0.4rem 2rem",
             border: "solid black 1px",
             backgroundColor: "#0079d5",
             width: "100%",
@@ -131,6 +132,9 @@ function DashBoard() {
                 <tr>
                   <th className="fs-6" scope="col">
                     Amount
+                  </th>
+                  <th className="fs-6" scope="col">
+                    Account
                   </th>
                   <th className="fs-6" scope="col">
                     Transaction Type

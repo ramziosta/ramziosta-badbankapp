@@ -16,7 +16,7 @@ import {
 import "../styles/SignIn.css";
 import axios from "../api/axios";
 
-const REGISTER_URL = "/register";
+
 
 function CreateAccount() {
 
@@ -108,6 +108,7 @@ function CreateAccount() {
       }
 
     //################ server ######################
+    const REGISTER_URL = "/register";
     try {
       const response = await axios.post(
         REGISTER_URL,
