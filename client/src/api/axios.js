@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'https://ramziosta-badbankapp.herokuapp.com/';
+const BASE_URL = '';
 
 export default axios.create({
     baseURL: BASE_URL

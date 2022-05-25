@@ -36,21 +36,7 @@ app.use("/employees", require("./routes/api/employees"));
 app.use("/users/transactions", require("./routes/acctransactions"));
 app.use("/users", require("./routes/api/users"));
 app.use("/users/email", require("./routes/api/users"));
-app.post("/transaction", async (req, res) => {
-  console.log(req.body);
-  try {
-   
-    await Transaction.create({
-      amount: req.body.amount,
-      balance: req.body.balance,
-      transactionType: req.body.transactionType,
-      transactionDate: req.body.transactionDate,
-    });
-    res.json({ status: "ok" });
-  } catch (err) {
-    res.json({ status: "error", error: "error needs to be set according to validation" });
-  }
-});
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join('build')));
