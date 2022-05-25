@@ -30,7 +30,7 @@ app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
 
-app.use(verifyJWT);
+//app.use(verifyJWT);
 app.use("/transactions", require("./routes/api/transaction"));
 app.use("/employees", require("./routes/api/employees"));
 app.use("/users/transactions", require("./routes/acctransactions"));
@@ -38,10 +38,7 @@ app.use("/users", require("./routes/api/users"));
 app.use("/users/email", require("./routes/api/users"));
 
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join('build')));
-  app.get("*", (req,res) => {(path.join(__dirname, 'client', 'build', 'index.html'))});
-}
+
 
 app.all("*", (req, res) => {
   res.status(404);
@@ -55,6 +52,11 @@ app.all("*", (req, res) => {
 });
 
 app.use(errorHandler);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join('build')));
+  app.get("*", (req,res) => {(path.join(__dirname, 'client', 'build', 'index.html'))});
+}
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
